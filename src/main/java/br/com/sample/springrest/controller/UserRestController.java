@@ -34,7 +34,7 @@ public class UserRestController {
     public ResponseEntity<List<User>> listAllUsers() {
         List<User> users = userService.findAll();
         if (users.isEmpty()) {
-            return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             // You many decide to return HttpStatus.NOT_FOUND
         }
         return new ResponseEntity<List<User>>(users, HttpStatus.OK);
@@ -47,7 +47,7 @@ public class UserRestController {
         User user = userService.findOne(id);
         if (user == null) {
             logger.error("User with id {} not found.", id);
-            return new ResponseEntity(new CustomErrorType("User with id " + id 
+            return new ResponseEntity<CustomErrorType>(new CustomErrorType("User with id " + id 
                     + " not found"), HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<User>(user, HttpStatus.OK);
@@ -60,7 +60,7 @@ public class UserRestController {
  
         if (userService.existing(user)) {
             logger.error("Unable to create. A User with name {} already exist", user.getName());
-            return new ResponseEntity(new CustomErrorType("Unable to create. A User with name " + 
+            return new ResponseEntity<CustomErrorType>(new CustomErrorType("Unable to create. A User with name " + 
             user.getName() + " already exist."),HttpStatus.CONFLICT);
         }
         userService.save(user);
@@ -79,7 +79,7 @@ public class UserRestController {
  
         if (currentUser == null) {
             logger.error("Unable to update. User with id {} not found.", id);
-            return new ResponseEntity(new CustomErrorType("Unable to upate. User with id " + id + " not found."),
+            return new ResponseEntity<CustomErrorType>(new CustomErrorType("Unable to upate. User with id " + id + " not found."),
                     HttpStatus.NOT_FOUND);
         }
  
@@ -98,7 +98,7 @@ public class UserRestController {
         User user = userService.findOne(id);
         if (user == null) {
             logger.error("Unable to delete. User with id {} not found.", id);
-            return new ResponseEntity(new CustomErrorType("Unable to delete. User with id " + id + " not found."),
+            return new ResponseEntity<CustomErrorType>(new CustomErrorType("Unable to delete. User with id " + id + " not found."),
                     HttpStatus.NOT_FOUND);
         }
         userService.delete(id);
