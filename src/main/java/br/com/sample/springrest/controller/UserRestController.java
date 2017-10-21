@@ -21,7 +21,7 @@ import br.com.sample.springrest.entity.User;
 import br.com.sample.springrest.service.UserService;
  
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/user")
 public class UserRestController {
  
     public static final Logger logger = LoggerFactory.getLogger(UserRestController.class);
@@ -30,7 +30,7 @@ public class UserRestController {
     UserService userService;
  
  
-    @RequestMapping(value = "/user/", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<User>> listAllUsers() {
         List<User> users = userService.findAll();
         if (users.isEmpty()) {
@@ -41,7 +41,7 @@ public class UserRestController {
     }
  
  
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getUser(@PathVariable("id") long id) {
         logger.info("Fetching User with id {}", id);
         User user = userService.findOne(id);
@@ -54,7 +54,7 @@ public class UserRestController {
     }
  
  
-    @RequestMapping(value = "/user/", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> createUser(@Valid @RequestBody User user, UriComponentsBuilder ucBuilder) {
         logger.info("Creating User : {}", user);
  
@@ -71,7 +71,7 @@ public class UserRestController {
     }
  
  
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> updateUser(@PathVariable("id") long id, @RequestBody User user) {
         logger.info("Updating User with id {}", id);
  
@@ -91,7 +91,7 @@ public class UserRestController {
         return new ResponseEntity<User>(currentUser, HttpStatus.OK);
     }
  
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteUser(@PathVariable("id") long id) {
         logger.info("Fetching & Deleting User with id {}", id);
  
@@ -105,7 +105,7 @@ public class UserRestController {
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
     }
  
-    @RequestMapping(value = "/user/", method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE)
     public ResponseEntity<User> deleteAllUsers() {
         logger.info("Deleting All Users");
         userService.deleteAll();
